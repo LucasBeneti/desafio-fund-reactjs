@@ -8,18 +8,14 @@ function App() {
   const [repositories, setRepositories] = useState([]);
 
   useEffect(() => {
-    api.get("/repositories").then((response) => {
+    async function loadRepositories() {
+      const response = await api.get("/repositories");
       setRepositories(response.data);
-    });
-  }, [repositories]);
+    }
+    loadRepositories();
+  }, []);
 
   async function handleAddRepository() {
-    // TODO
-    /*{
-      title:...,
-      url:...,
-      techs:[...]
-    } */
     const response = await api.post("/repositories", {
       title: `Novo repo ${Date.now()}`,
       url: "https://google.com",
@@ -32,7 +28,14 @@ function App() {
 
   async function handleRemoveRepository(id) {
     // TODO
-    await api.delete(`/repositories/${id}`);
+    const response = await api.delete(`/repositories/${id}`);
+
+    if (response.status === 204) {
+      const newRepositories = repositories.filter(
+        (repository) => repository.id !== id
+      );
+      setRepositories(newRepositories);
+    }
   }
 
   return (
