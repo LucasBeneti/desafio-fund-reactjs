@@ -14,6 +14,12 @@ function App() {
   }, [repositories]);
 
   async function handleAddRepository() {
+    // TODO
+    /*{
+      title:...,
+      url:...,
+      techs:[...]
+    } */
     const response = await api.post("/repositories", {
       title: `Novo repo ${Date.now()}`,
       url: "https://google.com",
@@ -25,7 +31,8 @@ function App() {
   }
 
   async function handleRemoveRepository(id) {
-    api.delete(`/repositories/${id}`);
+    // TODO
+    await api.delete(`/repositories/${id}`);
   }
 
   return (
